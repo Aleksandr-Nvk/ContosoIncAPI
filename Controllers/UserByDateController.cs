@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ContosoIncAPI.Entities;
-using System;
 using System.Globalization;
 using System.Linq;
+using System;
 
 namespace ContosoIncAPI.Controllers
 {
@@ -10,25 +10,22 @@ namespace ContosoIncAPI.Controllers
     [Route("/api/registration/bymonth")]
     public class UserByDateController : ControllerBase
     {
-
-        [HttpGet]
-        public ActionResult<User> GetUserByDate()
+        [HttpGet, Route("{date?}")]
+        public ActionResult<User> GetUserByDate(string date = null)
         {
-            var response = Database.QueryUsersByDate(DateTime.Now).FirstOrDefault();
+            if (date == null)
+            {
+                var now = DateTime.Now;
+                date = now.Year + (now.Month < 10 ? "0" : "") + now.Month;
+            }
             
-            return response == null ? NotFound() : response;
-        }
-
-        [HttpGet("{date}")]
-        public ActionResult<User> GetUserByDate(string date)
-        {
             DateTime dateParsed;
 
             try
             {
                 dateParsed = DateTime.ParseExact(date, "yyyyMM", CultureInfo.InvariantCulture);
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 return NotFound();
             }

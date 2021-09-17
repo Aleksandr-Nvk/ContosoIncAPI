@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
 using ContosoIncAPI.Entities;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace ContosoIncAPI
 {
