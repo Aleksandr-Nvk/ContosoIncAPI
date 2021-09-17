@@ -30,7 +30,7 @@ namespace ContosoIncAPI
 					var user = new User
 					{
 						year = reader.GetInt16(0),
-						month = DateTime.ParseExact(reader.GetString(1), "MMMM", CultureInfo.InvariantCulture).Month,
+						month = reader.GetString(1),
 						registeredUsers = reader.GetUInt32(2)
 					};
 					

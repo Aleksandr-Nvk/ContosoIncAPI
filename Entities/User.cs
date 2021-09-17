@@ -7,7 +7,7 @@ namespace ContosoIncAPI.Entities
     public record User
     {
         public short year {get; set;}
-        public int month {get; set;}
+        public string month {get; set;}
         public uint registeredUsers {get; set;}
 
         public IEnumerable<Device> registeredDevices {get; set;}
