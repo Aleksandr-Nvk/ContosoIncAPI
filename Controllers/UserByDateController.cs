@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ContosoIncAPI.Entities;
 using System.Globalization;
+using Newtonsoft.Json;
 using System.Linq;
 using System;
 
@@ -11,13 +12,9 @@ namespace ContosoIncAPI.Controllers
     public class UserByDateController : ControllerBase
     {
         [HttpGet, Route("{date?}")]
-        public ActionResult<User> GetUserByDate(string date = null)
+        public ActionResult<string> GetUserEntityByDate(string date = null)
         {
-            if (date == null)
-            {
-                var now = DateTime.Now;
-                date = now.Year + (now.Month < 10 ? "0" : "") + now.Month;
-            }
+            date ??= DateTime.Now.Year + (DateTime.Now.Month < 10 ? "0" : "") + DateTime.Now.Month;
             
             DateTime dateParsed;
 
@@ -30,18 +27,25 @@ namespace ContosoIncAPI.Controllers
                 return NotFound();
             }
 
-            var response = Database.QueryUsersByDate(dateParsed).FirstOrDefault();
-            
+            var response = Database.QueryUserEntitiesByDate(dateParsed).FirstOrDefault();
+            UserDevice result;
+
             if (response != null)
             {
-                response.registeredDevices = Database.QueryDevicesByDate(dateParsed);
+                result = new UserDevice
+                {
+                    Year = response.Year,
+                    Month = response.Month,
+                    UsersNum = response.UsersNum,
+                    RegisteredDevices = Database.QueryDeviceEntitiesByDate(dateParsed)
+                };
             }
             else
             {
                 return NotFound();
             }
 
-            return response;
+            return JsonConvert.SerializeObject(result);
         }
     }
 }
