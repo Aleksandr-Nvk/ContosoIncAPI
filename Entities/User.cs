@@ -1,15 +1,16 @@
-using System.Collections.Generic;
-using System;
+using Newtonsoft.Json;
 
 namespace ContosoIncAPI.Entities
 {
-    [Serializable]
     public record User
     {
-        public short year {get; set;}
-        public string month {get; set;}
-        public uint registeredUsers {get; set;}
-
-        public IEnumerable<Device> registeredDevices {get; set;}
+        [JsonProperty(PropertyName = "year")]
+        public short Year {get; set;}
+        
+        [JsonProperty(PropertyName = "month")]
+        public string Month {get; set;}
+        
+        [JsonProperty(PropertyName = "registeredUsers")]
+        public uint UsersNum {get; set;}
     }
 }
