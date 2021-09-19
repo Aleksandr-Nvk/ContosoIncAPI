@@ -37,8 +37,11 @@ namespace ContosoIncAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContosoIncAPI v1"));
             }
 
-            app.UseHttpsRedirection();
-
+            if (env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            
             app.UseRouting();
 
             app.UseAuthorization();
