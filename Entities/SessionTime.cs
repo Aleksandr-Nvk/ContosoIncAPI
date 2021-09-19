@@ -6,15 +6,15 @@ namespace ContosoIncAPI.Entities
 	public record SessionTime
 	{
 		[JsonIgnore]
-		public DateTime Date {get; set;}
+		public DateTime Date {get; init;}
 		
 		[JsonProperty(PropertyName = "hour")]
-		public uint Hour {get; set;}
+		public uint Hour {get; init;}
 		
 		[JsonProperty(PropertyName = "totalTimeForHour")]
-		public uint Duration {get; set;}
+		public uint Duration {get; init;}
 		
 		[JsonProperty(PropertyName = "qumulativeForHour")]
-		public uint DurationAccumulated {get; set;}
+		public uint DurationAccumulated {get; init;}
 	}
 }

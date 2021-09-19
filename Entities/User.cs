@@ -5,12 +5,12 @@ namespace ContosoIncAPI.Entities
     public record User
     {
         [JsonProperty(PropertyName = "year")]
-        public short Year {get; set;}
+        public short Year {get; init;}
         
         [JsonProperty(PropertyName = "month")]
-        public string Month {get; set;}
+        public string Month {get; init;}
         
         [JsonProperty(PropertyName = "registeredUsers")]
-        public uint UsersNum {get; set;}
+        public uint UsersNum {get; init;}
     }
 }

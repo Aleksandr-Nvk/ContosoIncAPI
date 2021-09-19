@@ -6,6 +6,6 @@ namespace ContosoIncAPI.Entities
 	public record UserDevice : User
 	{
 		[JsonProperty(PropertyName = "registeredDevices", Order = 0)]
-		public IEnumerable<Device> RegisteredDevices {get; set;}
+		public IEnumerable<Device> RegisteredDevices {get; init;}
 	}
 }

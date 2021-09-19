@@ -20,9 +20,17 @@ namespace ContosoIncAPI
 				var query = $"SELECT * FROM registrations_by_month WHERE year = {date.Year} AND month = '{month}';";
 				
 				var command = new MySqlCommand(query, connection);
-				connection.Open();
+				MySqlDataReader reader;
 				
-				var reader = command.ExecuteReader();
+				try
+				{
+					connection.Open();
+					reader = command.ExecuteReader();
+				}
+				catch (Exception)
+				{
+					return result;
+				}
 				
 				while (reader.Read())
 				{
@@ -50,10 +58,18 @@ namespace ContosoIncAPI
 				var query = $"SELECT * FROM device_registrations_by_type_and_month WHERE year = {date.Year} AND month = '{month}';";
 				
 				var command = new MySqlCommand(query, connection);
-				connection.Open();
+				MySqlDataReader reader;
 				
-				var reader = command.ExecuteReader();
-				
+				try
+				{
+					connection.Open();
+					reader = command.ExecuteReader();
+				}
+				catch (Exception)
+				{
+					return result;
+				}
+
 				while (reader.Read())
 				{
 					var device = new Device
@@ -75,18 +91,15 @@ namespace ContosoIncAPI
 
 			using (var connection = new MySqlConnection(ConnectionString))
 			{
-				Console.WriteLine($"start: {startTime}");
-				Console.WriteLine($"end: {endTime}");
-
 				var query = $"SELECT * FROM concurrent_sessions_by_hour WHERE hour >= '{startTime}' AND hour <= '{endTime}';";
 
 				var command = new MySqlCommand(query, connection);
-				connection.Open();
 
 				MySqlDataReader reader;
 				
 				try
 				{
+					connection.Open();
 					reader = command.ExecuteReader();
 				}
 				catch (Exception)
@@ -115,17 +128,15 @@ namespace ContosoIncAPI
 
 			using (var connection = new MySqlConnection(ConnectionString))
 			{
-				Console.WriteLine($"date: {time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}");
-
 				var query = $"SELECT * FROM session_duration_by_hour WHERE date = '{time.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}' AND hour = {time.Hour};";
 
 				var command = new MySqlCommand(query, connection);
-				connection.Open();
 
 				MySqlDataReader reader;
 				
 				try
 				{
+					connection.Open();
 					reader = command.ExecuteReader();
 				}
 				catch (Exception)
@@ -149,6 +160,82 @@ namespace ContosoIncAPI
 			
 			return result;
 		}
+		
+		public static List<ConcurrentLogin> QueryConcurrentLogins()
+		{
+			var result = new List<ConcurrentLogin>();
 
+			using (var connection = new MySqlConnection(ConnectionString))
+			{
+				var query = "SELECT * FROM concurrent_users_from_multiple_devices;";
+
+				var command = new MySqlCommand(query, connection);
+
+				MySqlDataReader reader;
+				
+				try
+				{
+					connection.Open();
+					reader = command.ExecuteReader();
+				}
+				catch (Exception)
+				{
+					return result;
+				}
+				
+				while (reader.Read())
+				{
+					var login = new ConcurrentLogin
+					{
+						UserName = reader.GetString(0),
+						DeviceName = reader.GetString(1),
+						LoginTs = reader.GetDateTime(2)
+					};
+					
+					result.Add(login);
+				}
+			}
+			
+			return result;
+		}
+
+		public static List<UnseenCountryLogin> QueryUnseenCountryLoginByNameAndTime(string userName, DateTime time)
+		{
+			var result = new List<UnseenCountryLogin>();
+
+			using (var connection = new MySqlConnection(ConnectionString))
+			{
+				Console.WriteLine(time.ToString("s", CultureInfo.InvariantCulture));
+				var query = $"SELECT * FROM users_by_unseen_country WHERE user_name = '{userName}' AND login_ts ='{time.ToString("s", CultureInfo.InvariantCulture)}';";
+
+				var command = new MySqlCommand(query, connection);
+				connection.Open();
+
+				MySqlDataReader reader;
+				
+				try
+				{
+					reader = command.ExecuteReader();
+				}
+				catch (Exception)
+				{
+					return result;
+				}
+				
+				while (reader.Read())
+				{
+					var countryLogin = new UnseenCountryLogin
+					{
+						UserName = reader.GetString(0),
+						Country = reader.GetString(1),
+						LoginTs = reader.GetDateTime(2)
+					};
+					
+					result.Add(countryLogin);
+				}
+			}
+			
+			return result;
+		}
 	}
 }
