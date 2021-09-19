@@ -3,6 +3,7 @@ using System;
 
 namespace ContosoIncAPI.Entities
 {  
+    // model for table 3
     public record SessionCount
     {
         [JsonIgnore]

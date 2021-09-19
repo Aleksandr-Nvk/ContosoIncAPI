@@ -3,6 +3,7 @@ using System;
 
 namespace ContosoIncAPI.Entities
 {
+	// model for table 5
 	public record SessionTime
 	{
 		[JsonIgnore]

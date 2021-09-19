@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace ContosoIncAPI.Entities
 {
+	// compound model for task 1
 	public record UserDevice : User
 	{
 		[JsonProperty(PropertyName = "registeredDevices", Order = 0)]

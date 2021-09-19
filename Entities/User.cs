@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace ContosoIncAPI.Entities
 {
+    // model for table 1
     public record User
     {
         [JsonProperty(PropertyName = "year")]

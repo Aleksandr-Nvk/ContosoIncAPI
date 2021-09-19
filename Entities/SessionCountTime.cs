@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace ContosoIncAPI.Entities
 {
+	// compound model for task 2
 	public record SessionCountTime : SessionCount
 	{
 		[JsonProperty(PropertyName = "date", Order = -1)]

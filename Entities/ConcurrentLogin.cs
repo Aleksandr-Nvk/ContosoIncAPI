@@ -1,9 +1,10 @@
-using System;
 using System.Globalization;
 using Newtonsoft.Json;
+using System;
 
 namespace ContosoIncAPI.Entities
 {
+	// model for table 4
 	public record ConcurrentLogin
 	{
 		[JsonProperty(PropertyName = "userName", Order = -1)]

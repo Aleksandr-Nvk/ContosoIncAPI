@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 
 namespace ContosoIncAPI.Entities
 {  
+	// model for table 2
 	public record Device
 	{
 		[JsonIgnore]

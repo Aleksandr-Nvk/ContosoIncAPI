@@ -13,19 +13,20 @@ namespace ContosoIncAPI.Controllers
 		[HttpGet]
 		public string GetLoginsFromUnseenCountries()
 		{
-			var response = Database.QueryConcurrentLogins();
+			var response = Database.LoadConcurrentLogins();
+			
 			var logins = new List<UnseenCountryConcurrentLogin>(response.Count);
 
-			for (var i = 0; i < response.Count; i++)
+			foreach (var entity in response)
 			{
 				logins.Add(new UnseenCountryConcurrentLogin
 				{
-					UserName = response[i].UserName,
-					DeviceName = response[i].DeviceName,
-					LoginTs = response[i].LoginTs,
+					UserName = entity.UserName,
+					DeviceName = entity.DeviceName,
+					LoginTs = entity.LoginTs,
 
 					UnseenCountryLogin = Database
-						.QueryUnseenCountryLoginByNameAndTime(response[i].UserName, response[i].LoginTs)
+						.LoadUnseenCountryLogins(entity.UserName, entity.LoginTs)
 						.FirstOrDefault()
 				});
 			}
