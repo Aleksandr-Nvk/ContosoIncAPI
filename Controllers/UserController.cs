@@ -4,9 +4,11 @@ using System.Globalization;
 using Newtonsoft.Json;
 using System.Linq;
 using System;
+using ContosoIncAPI.Security;
 
 namespace ContosoIncAPI.Controllers
 {
+    [ApiKey]
     [ApiController]
     [Route("/api/registration/bymonth")]
     public class UserController : ControllerBase

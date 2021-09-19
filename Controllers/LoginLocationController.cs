@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using ContosoIncAPI.Entities;
 using Newtonsoft.Json;
 using System.Linq;
+using ContosoIncAPI.Security;
 
 namespace ContosoIncAPI.Controllers
 {
+	[ApiKey]
 	[ApiController]
 	[Route("/api/users/anomalies")]
 	public class LoginLocationController : ControllerBase

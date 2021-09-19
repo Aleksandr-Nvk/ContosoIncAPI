@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using ContosoIncAPI.Entities;
+using ContosoIncAPI.Security;
 using Newtonsoft.Json;
 using System.Linq;
 
 namespace ContosoIncAPI.Controllers
 {
+	[ApiKey]
 	[ApiController]
 	[Route("/api/sessions/byhour")]
 	public class LoginStatsController : ControllerBase
 	{
 		[HttpGet]
-		public string GetSessions(string startTime = "0001-01-01T12:00:00", 
-											 string endTime = "9999-12-31T11:59:59")
+		public string GetSessions(string startTime = "0001-01-01T12:00:00", string endTime = "9999-12-31T11:59:59")
 		{
 			var response = Database.LoadSessionCounts(startTime, endTime);
 			
