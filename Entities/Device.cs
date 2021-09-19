@@ -5,15 +5,15 @@ namespace ContosoIncAPI.Entities
 	public record Device
 	{
 		[JsonIgnore]
-		public short Year {get; set;}
+		public short Year {get; init;}
 		
 		[JsonIgnore]
-		public string Month {get; set;}
+		public string Month {get; init;}
 		
 		[JsonProperty(PropertyName = "type")]
-		public string DeviceType {get; set;}
+		public string DeviceType {get; init;}
 		
 		[JsonProperty(PropertyName = "value")]
-		public uint UsersNum {get; set;}
+		public uint UsersNum {get; init;}
 	}
 }
