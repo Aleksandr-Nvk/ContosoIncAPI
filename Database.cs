@@ -8,7 +8,7 @@ namespace ContosoIncAPI
 {
 	public static class Database
 	{
-		private const string ConnectionString = "Server=localhost, 3306; Database=contoso_inc; Uid=root; Pwd=f6e527xp;";
+		private const string ConnectionString = "Server=database, 3306; Database=contoso_inc_db; Uid=toor; Pwd=f6e527xp;";
 
 		/// <summary>
 		/// Performs a connection to the database. NOTE: this is a lazy connection, and finalizers are responsible
@@ -28,8 +28,9 @@ namespace ContosoIncAPI
 				connection.Open();
 				reader = command.ExecuteReader();
 			}
-			catch (Exception) 
+			catch (Exception e) 
 			{
+				Console.WriteLine(e);
 				// data is unavailable due to a connection fault, ignore
 			}
 
