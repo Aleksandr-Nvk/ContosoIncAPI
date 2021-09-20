@@ -8,8 +8,6 @@ namespace ContosoIncAPI
 {
 	public static class Database
 	{
-		private const string ConnectionString = "Server=database, 3306; Database=contoso_inc_db; Uid=toor; Pwd=f6e527xp;";
-
 		/// <summary>
 		/// Performs a connection to the database. NOTE: this is a lazy connection, and finalizers are responsible
 		/// for disposing all unmanaged code and closing the connection.
@@ -18,7 +16,12 @@ namespace ContosoIncAPI
 		/// <returns>New MySQL data reader</returns>
 		private static MySqlDataReader GetReader(string query)
 		{
-			var connection = new MySqlConnection(ConnectionString);
+			const string connectionString = @"Server=database, 3306; 
+											  Database=contoso_inc_db; 
+											  Uid=root; 
+											  Pwd=;"; // password may be empty, since the database is supposedly trusted
+
+			var connection = new MySqlConnection(connectionString);
 			var command = new MySqlCommand(query, connection);
 			
 			MySqlDataReader reader = null;
@@ -28,9 +31,8 @@ namespace ContosoIncAPI
 				connection.Open();
 				reader = command.ExecuteReader();
 			}
-			catch (Exception e) 
+			catch (Exception) 
 			{
-				Console.WriteLine(e);
 				// data is unavailable due to a connection fault, ignore
 			}
 
