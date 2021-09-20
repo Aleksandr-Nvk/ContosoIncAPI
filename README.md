@@ -14,8 +14,26 @@ For example, [`UnseenCountryConcurrentLogin.cs`](https://github.com/Aleksandr-Nv
 
 `Database.cs` comprises of methods for loading data from the database. Each method works exactly with one database table and one non-compound entity.
 
-There is also a private method [`Database.GetReader()`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/Database.cs#L19). It is called by every `Database.LoadXXX()` method in order to open a new connection to the database, and returns a `MySQLDataReader` if connection was successfully established; otherwise, returns `null`. This method takes no responsibility for releasing unmanaged code, since finalizers in `MySQLXXX` classes call `Dispose()` implicitly.
+There is also a private method [`Database.GetReader()`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/Database.cs#L17). It is called by every `Database.LoadXXX()` method in order to open a new connection to the database, and returns a `MySQLDataReader` if connection was successfully established; otherwise, returns `null`. This method takes no responsibility for releasing unmanaged code, since finalizers in `MySQLXXX` classes call `Dispose()` implicitly.
 
 [`contoso_inc.sql`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/contoso_inc.sql) is an sql script for all tables in the MySQL database. It is executed on every Docker build.
 
 `ApiKeyAttribute.cs` is a security attribute, used by controllers to guarantee that data will not be accessed, if a correct API key is not provided in a header. The API key is configured in [`appsettings.json`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/appsettings.json) as an `x-api-key` field. All controllers use this attribute.
+
+## How to install
+
+The project can be composed using Docker. Follow these steps:
+
+1. [Download](https://github.com/Aleksandr-Nvk/ContosoIncAPI/archive/refs/heads/main.zip) the files from this repository, or clone it like this:
+
+```gh repo clone Aleksandr-Nvk/ContosoIncAPI```
+
+2. In project files You will find the [`Dockerfile`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/Dockerfile) and the [`docker-compose.yml`](https://github.com/Aleksandr-Nvk/ContosoIncAPI/blob/main/docker-compose.yml) file. Use them both to built images and a docker container:
+
+```docker-compose -f docker-compose.yml up```
+
+3. API is ready for use. Test them with Postman, Swagger, and/or other tool.
+
+## Examples
+
+Examples of GET requests to this API is available in this [Postman workspace](https://www.postman.com/material-geoscientist-84815076/workspace/contosoincapi).
